@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Budget Blessing Worksheet — Diva | PlanAura</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1F3A;--gold:#D4AF37;--gold-light:#F5EDD8;--gold-mid:#E8D080;--gold-dark:#9A7C1A;
+  --ivory:#F8F5F0;--ivory-mid:#EDE8DF;--charcoal:#1A1A1A;
+  --sage:#A8BFA3;--sage-light:#E8F0E5;--sage-dark:#5C7A57;
+  --white:#FFFFFF;--gray:#6B7280;--light-gray:#F3F4F6;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --green:#059669;--green-light:#ECFDF5;
+  --serif:'Playfair Display',Georgia,serif;--sans:'Nunito',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--ivory);color:var(--charcoal);min-height:100vh}
+a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+input,select,textarea{font-family:var(--sans)}
+input[type=number]::-webkit-inner-spin-button{opacity:1}
+
+/* ── HEADER ── */
+.ws-header{background:var(--navy);padding:2rem 5vw 1.75rem;position:relative;overflow:hidden;text-align:center}
+.ws-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 30%,rgba(212,175,55,0.1),transparent 60%);pointer-events:none}
+.ws-brand{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:0.5rem}
+.ws-title{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:0.4rem}
+.ws-title em{font-style:italic;color:var(--gold)}
+.ws-subtitle{font-size:0.88rem;color:rgba(255,255,255,0.5);line-height:1.7;max-width:460px;margin:0 auto 1.25rem}
+.ws-verse{display:inline-block;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.2);border-radius:8px;padding:0.6rem 1.2rem;font-family:var(--serif);font-style:italic;font-size:0.84rem;color:rgba(255,255,255,0.65);max-width:440px}
+
+/* ── TAB SWITCHER ── */
+.tab-bar{background:var(--navy);border-bottom:1px solid rgba(255,255,255,0.08);display:flex;padding:0 5vw;gap:0}
+.tab-btn{font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.45);padding:0.85rem 1.25rem;background:none;border:none;cursor:pointer;font-family:var(--sans);border-bottom:2px solid transparent;transition:all 0.2s;display:flex;align-items:center;gap:7px}
+.tab-btn:hover{color:rgba(255,255,255,0.75)}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.notion-embed-wrap{height:calc(100vh - 140px);min-height:600px;background:var(--white)}
+.notion-embed-wrap iframe{width:100%;height:100%;border:none;display:block}
+.notion-embed-bar{background:var(--gold-light);border-bottom:1px solid rgba(212,175,55,0.3);padding:0.75rem 5vw;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.notion-embed-bar-text{font-size:0.78rem;color:var(--gold-dark);font-weight:600}
+
+/* ── CURRENCY SELECTOR ── */
+.currency-bar{background:var(--gold-light);border-bottom:1px solid rgba(212,175,55,0.3);padding:0.85rem 5vw;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.currency-bar-label{font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-dark)}
+.currency-btns{display:flex;gap:6px}
+.currency-btn{font-size:0.75rem;font-weight:700;letter-spacing:0.06em;padding:7px 18px;border-radius:6px;border:1.5px solid rgba(212,175,55,0.4);background:transparent;color:var(--gold-dark);cursor:pointer;font-family:var(--sans);transition:all 0.15s}
+.currency-btn.active{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.month-field{display:flex;align-items:center;gap:8px;font-size:0.78rem;color:var(--gold-dark);font-weight:600}
+.month-input{padding:6px 12px;border:1.5px solid rgba(212,175,55,0.35);border-radius:6px;font-family:var(--sans);font-size:0.82rem;color:var(--charcoal);background:var(--white);outline:none;width:130px}
+.month-input:focus{border-color:var(--gold)}
+
+/* ── MAIN LAYOUT ── */
+.ws-body{max-width:900px;margin:0 auto;padding:2.5rem 5vw 4rem}
+
+/* ── SECTION CARDS ── */
+.ws-section{background:var(--white);border:1px solid var(--ivory-mid);border-radius:16px;margin-bottom:1.5rem;overflow:hidden}
+.ws-section-header{display:flex;align-items:center;gap:12px;padding:1.1rem 1.5rem;border-bottom:1px solid var(--ivory-mid);cursor:pointer;user-select:none}
+.ws-section-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.ws-section-icon.navy{background:#EEF2F8;color:var(--navy)}
+.ws-section-icon.gold{background:var(--gold-light);color:var(--gold-dark)}
+.ws-section-icon.sage{background:var(--sage-light);color:var(--sage-dark)}
+.ws-section-num{font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);margin-bottom:2px}
+.ws-section-name{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--navy);line-height:1}
+.ws-section-toggle{margin-left:auto;font-size:0.75rem;color:var(--gray);transition:transform 0.2s}
+.ws-section-toggle.open{transform:rotate(180deg)}
+.ws-section-body{padding:1.25rem 1.5rem;display:none}
+.ws-section-body.open{display:block}
+
+/* ── VERSE CALLOUT ── */
+.section-verse{background:var(--ivory);border-left:3px solid var(--gold);border-radius:0 8px 8px 0;padding:0.65rem 1rem;margin-bottom:1.25rem;font-family:var(--serif);font-style:italic;font-size:0.84rem;color:var(--gray);line-height:1.65}
+.section-verse cite{display:block;font-style:normal;font-size:0.72rem;color:var(--gold-dark);font-weight:700;margin-top:3px;font-family:var(--sans);letter-spacing:0.05em}
+
+/* ── INPUT ROWS ── */
+.input-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin-bottom:8px}
+.input-row-3{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-bottom:8px}
+.input-label{font-size:0.83rem;color:var(--charcoal);font-weight:500}
+.input-label.muted{color:var(--gray);font-size:0.8rem}
+.ws-input{padding:9px 12px;border:1.5px solid var(--ivory-mid);border-radius:7px;font-family:var(--sans);font-size:0.86rem;color:var(--charcoal);outline:none;transition:border-color 0.2s;width:100%;background:var(--white)}
+.ws-input:focus{border-color:var(--gold)}
+.ws-input::placeholder{color:#C4C9D4}
+.ws-input.amount{text-align:right;max-width:130px;min-width:100px}
+.ws-input.wide-amount{text-align:right;width:130px}
+.currency-symbol{font-size:0.78rem;color:var(--gray);white-space:nowrap;font-weight:600;align-self:center;padding:0 2px}
+
+/* ── DIVIDER ── */
+.ws-divider{border:none;border-top:1px solid var(--ivory-mid);margin:1rem 0}
+
+/* ── TOTALS ── */
+.total-row{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border-radius:8px;margin-top:0.5rem}
+.total-row.income{background:var(--green-light)}
+.total-row.expense{background:var(--red-light)}
+.total-row.neutral{background:var(--ivory)}
+.total-row.highlight{background:var(--navy)}
+.total-label{font-size:0.78rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase}
+.total-row.income .total-label{color:var(--green)}
+.total-row.expense .total-label{color:var(--red)}
+.total-row.neutral .total-label{color:var(--gray)}
+.total-row.highlight .total-label{color:rgba(255,255,255,0.65)}
+.total-value{font-family:var(--serif);font-size:1.15rem;font-weight:700}
+.total-row.income .total-value{color:var(--green)}
+.total-row.expense .total-value{color:var(--red)}
+.total-row.neutral .total-value{color:var(--navy)}
+.total-row.highlight .total-value{color:var(--gold)}
+
+/* ── BALANCE METER ── */
+.balance-block{margin-top:1rem;padding:1.25rem;background:var(--ivory);border-radius:10px}
+.balance-label{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--gray);margin-bottom:0.5rem}
+.balance-track{height:10px;background:var(--ivory-mid);border-radius:99px;overflow:hidden;margin-bottom:0.4rem}
+.balance-fill{height:100%;border-radius:99px;transition:width 0.5s ease,background 0.3s ease;min-width:4px}
+.balance-note{font-size:0.78rem;color:var(--gray);line-height:1.55}
+
+/* ── SAVINGS GOALS ── */
+.goal-card{background:var(--ivory);border-radius:10px;padding:1rem;margin-bottom:10px;position:relative}
+.goal-card-header{display:flex;align-items:center;gap:8px;margin-bottom:0.75rem}
+.goal-num{width:22px;height:22px;border-radius:50%;background:var(--navy);color:var(--white);font-size:0.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.goal-title-input{flex:1;padding:6px 10px;border:1.5px solid var(--ivory-mid);border-radius:6px;font-family:var(--serif);font-size:0.88rem;font-weight:700;color:var(--navy);outline:none;background:var(--white)}
+.goal-title-input:focus{border-color:var(--gold)}
+.goal-title-input::placeholder{color:#C4C9D4}
+.goal-fields{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.goal-field label{font-size:0.67rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);font-weight:600;display:block;margin-bottom:3px}
+.goal-progress{margin-top:0.75rem}
+.goal-progress-track{height:6px;background:var(--ivory-mid);border-radius:99px;overflow:hidden;margin-bottom:3px}
+.goal-progress-fill{height:100%;background:var(--sage);border-radius:99px;transition:width 0.4s ease}
+.goal-progress-label{font-size:0.7rem;color:var(--gray)}
+
+/* ── DEBT TRACKER ── */
+.debt-row{display:grid;grid-template-columns:1.5fr 1fr 1fr 0.7fr;gap:8px;align-items:center;margin-bottom:7px}
+.debt-header{display:grid;grid-template-columns:1.5fr 1fr 1fr 0.7fr;gap:8px;margin-bottom:5px}
+.debt-header span{font-size:0.63rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);font-weight:600}
+
+/* ── ADD ROW BUTTONS ── */
+.add-row-btn{display:inline-flex;align-items:center;gap:6px;font-size:0.73rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold-dark);background:var(--gold-light);border:1px solid rgba(212,175,55,0.3);border-radius:6px;padding:7px 14px;cursor:pointer;font-family:var(--sans);transition:all 0.15s;margin-top:6px}
+.add-row-btn:hover{background:var(--gold-mid);border-color:var(--gold)}
+
+/* ── SUMMARY DASHBOARD ── */
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1rem}
+.summary-card{background:var(--ivory);border-radius:10px;padding:1rem;text-align:center}
+.summary-card-label{font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);font-weight:600;margin-bottom:0.4rem}
+.summary-card-value{font-family:var(--serif);font-size:1.35rem;font-weight:700}
+.summary-card-value.income{color:var(--green)}
+.summary-card-value.expense{color:var(--red)}
+.summary-card-value.balance.positive{color:var(--navy)}
+.summary-card-value.balance.negative{color:var(--red)}
+
+/* ── PRINT/SAVE ── */
+.ws-actions{display:flex;gap:10px;justify-content:center;padding:1.5rem 5vw;background:var(--navy);flex-wrap:wrap}
+.btn-gold{display:inline-block;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:0.75rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:12px 26px;border-radius:8px;border:none;cursor:pointer;transition:all 0.2s}
+.btn-gold:hover{background:var(--gold-mid)}
+.btn-outline-white{display:inline-block;background:transparent;color:var(--white);font-family:var(--sans);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:11px 24px;border-radius:8px;border:2px solid rgba(255,255,255,0.3);cursor:pointer;transition:all 0.2s}
+.btn-outline-white:hover{border-color:var(--white)}
+
+/* ── NOTION GUIDE ── */
+.notion-guide{background:var(--ivory-mid);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
+.notion-guide-title{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.75rem;display:flex;align-items:center;gap:8px}
+.notion-step{display:flex;gap:10px;margin-bottom:8px;align-items:flex-start;font-size:0.84rem;color:var(--charcoal);line-height:1.6}
+.notion-step-num{width:20px;height:20px;border-radius:50%;background:var(--navy);color:var(--white);font-size:0.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+@media print{
+  .currency-bar,.ws-actions,.notion-guide{display:none}
+  .ws-section-body{display:block!important}
+  .ws-section-toggle{display:none}
+  body{background:white}
+  .ws-section{border:1px solid #ddd;break-inside:avoid}
+}
+@media(max-width:640px){
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .goal-fields{grid-template-columns:1fr 1fr}
+  .debt-row,.debt-header{grid-template-columns:1fr 1fr}
+  .debt-row .ws-input:nth-child(3),.debt-header span:nth-child(3){display:none}
+  .currency-bar{flex-direction:column;align-items:flex-start}
+  .input-row-3{grid-template-columns:1fr auto}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="ws-header">
+  <div class="ws-brand">Diva | PlanAura · Personal Finance</div>
+  <h1 class="ws-title">Budget <em>Blessing</em> Worksheet</h1>
+  <p class="ws-subtitle">A faith-rooted zero-based budget — where every naira and dollar is assigned a purpose before the month begins.</p>
+  <div class="ws-verse">"Commit your work to the Lord, and your plans will be established." — Proverbs 16:3</div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('interactive')" id="tab-interactive">📊 Interactive Worksheet</button>
+  <button class="tab-btn" onclick="switchTab('notion')" id="tab-notion">📋 Notion Version</button>
+</div>
+
+<!-- INTERACTIVE TAB -->
+<div class="tab-panel active" id="panel-interactive">
+
+<!-- CURRENCY + MONTH BAR -->
+<div class="currency-bar">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <span class="currency-bar-label">Currency</span>
+    <div class="currency-btns">
+      <button class="currency-btn active" onclick="setCurrency('NGN','₦')">₦ Naira</button>
+      <button class="currency-btn" onclick="setCurrency('USD','$')">$ Dollar</button>
+    </div>
+  </div>
+  <div class="month-field">
+    <span>Month</span>
+    <input type="month" class="month-input" id="monthInput" onchange="updateMonth()"/>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="ws-body">
+
+  <!-- NOTION SETUP GUIDE -->
+  <div class="notion-guide">
+    <div class="notion-guide-title">📋 How to use this worksheet</div>
+    <div class="notion-step"><div class="notion-step-num">1</div><span>Choose your currency and select the current month above</span></div>
+    <div class="notion-step"><div class="notion-step-num">2</div><span>Work through each section top to bottom — income first, then expenses</span></div>
+    <div class="notion-step"><div class="notion-step-num">3</div><span>The balance meter at the bottom of Section 2 shows how close you are to zero-based</span></div>
+    <div class="notion-step"><div class="notion-step-num">4</div><span>Click <strong>Print / Save as PDF</strong> to save your completed worksheet each month</span></div>
+    <div class="notion-step"><div class="notion-step-num">5</div><span>For a Notion version — duplicate the template link in your welcome email into your Notion workspace</span></div>
+  </div>
+
+  <!-- SECTION 1: INCOME -->
+  <div class="ws-section" id="sec1">
+    <div class="ws-section-header" onclick="toggleSection('sec1')">
+      <div class="ws-section-icon navy">◈</div>
+      <div><div class="ws-section-num">Section 1</div><div class="ws-section-name">Total Income</div></div>
+      <div class="ws-section-toggle open" id="sec1-toggle">▼</div>
+    </div>
+    <div class="ws-section-body open" id="sec1-body">
+      <div class="section-verse">"The earth is the Lord's, and everything in it." — Psalm 24:1<cite>Everything we earn is entrusted to us. Record it all here with gratitude.</cite></div>
+      <div id="incomeRows">
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Primary salary / job income" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-income/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Secondary income / side business" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-income/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Freelance / contract work" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-income/></div>
+      </div>
+      <button class="add-row-btn" onclick="addRow('incomeRows','income')">+ Add income source</button>
+      <hr class="ws-divider"/>
+      <div class="total-row income">
+        <span class="total-label">Total Income</span>
+        <span class="total-value" id="totalIncome">— —</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: EXPENSES -->
+  <div class="ws-section" id="sec2">
+    <div class="ws-section-header" onclick="toggleSection('sec2')">
+      <div class="ws-section-icon navy">◆</div>
+      <div><div class="ws-section-num">Section 2</div><div class="ws-section-name">Monthly Expenses</div></div>
+      <div class="ws-section-toggle open" id="sec2-toggle">▼</div>
+    </div>
+    <div class="ws-section-body open" id="sec2-body">
+      <div class="section-verse">"She considers a field and buys it; out of her earnings she plants a vineyard." — Proverbs 31:16<cite>Plan your spending intentionally — every category matters.</cite></div>
+
+      <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--navy);margin-bottom:8px">🏠 Housing & Utilities</div>
+      <div id="housingRows">
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Rent / mortgage" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Electricity / water / gas" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Internet / phone" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+      </div>
+      <button class="add-row-btn" onclick="addRow('housingRows','expense')">+ Add</button>
+      <hr class="ws-divider"/>
+
+      <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--navy);margin-bottom:8px">🛒 Food & Household</div>
+      <div id="foodRows">
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Groceries / market" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Eating out / takeaway" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+      </div>
+      <button class="add-row-btn" onclick="addRow('foodRows','expense')">+ Add</button>
+      <hr class="ws-divider"/>
+
+      <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--navy);margin-bottom:8px">🚗 Transport</div>
+      <div id="transportRows">
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Fuel / transport fare" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Car maintenance / ride hailing" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+      </div>
+      <button class="add-row-btn" onclick="addRow('transportRows','expense')">+ Add</button>
+      <hr class="ws-divider"/>
+
+      <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--navy);margin-bottom:8px">👗 Personal & Lifestyle</div>
+      <div id="personalRows">
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Clothing / beauty / haircare" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Subscriptions (Netflix, apps, etc.)" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Health / medication" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+      </div>
+      <button class="add-row-btn" onclick="addRow('personalRows','expense')">+ Add</button>
+      <hr class="ws-divider"/>
+
+      <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;color:var(--navy);margin-bottom:8px">📦 Other Expenses</div>
+      <div id="otherRows">
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Family support / gifts" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-expense/></div>
+      </div>
+      <button class="add-row-btn" onclick="addRow('otherRows','expense')">+ Add</button>
+      <hr class="ws-divider"/>
+
+      <div class="total-row expense">
+        <span class="total-label">Total Expenses</span>
+        <span class="total-value" id="totalExpenses">— —</span>
+      </div>
+
+      <!-- BALANCE METER -->
+      <div class="balance-block">
+        <div class="balance-label">Zero-Based Balance — aim for ₦0 / $0</div>
+        <div class="balance-track"><div class="balance-fill" id="balanceFill" style="width:0%;background:var(--sage)"></div></div>
+        <div class="balance-note" id="balanceNote">Fill in your income and expenses to see your balance.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: TITHE & GIVING -->
+  <div class="ws-section" id="sec3">
+    <div class="ws-section-header" onclick="toggleSection('sec3')">
+      <div class="ws-section-icon gold">✝</div>
+      <div><div class="ws-section-num">Section 3</div><div class="ws-section-name">Tithe & Giving</div></div>
+      <div class="ws-section-toggle open" id="sec3-toggle">▼</div>
+    </div>
+    <div class="ws-section-body open" id="sec3-body">
+      <div class="section-verse">"Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver." — 2 Corinthians 9:7<cite>Give first. Generosity is an act of trust, not an afterthought.</cite></div>
+
+      <div class="input-row"><div class="input-label">Parish tithe (10% of income)</div><input class="ws-input wide-amount" type="number" min="0" placeholder="0" id="titheAmt" oninput="calcTithe()"/></div>
+      <div class="input-row"><div class="input-label">Parish second collection / special offering</div><input class="ws-input wide-amount" type="number" min="0" placeholder="0" id="secondCollAmt" oninput="calcTithe()"/></div>
+      <div id="givingRows">
+        <div class="input-row"><input class="ws-input" type="text" placeholder="Charitable giving (e.g. SVdP, family support)" oninput="calcTithe()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calcTithe()" data-giving/></div>
+      </div>
+      <button class="add-row-btn" onclick="addRow('givingRows','giving')">+ Add giving</button>
+      <hr class="ws-divider"/>
+
+      <!-- 10% HELPER -->
+      <div style="background:var(--sage-light);border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.75rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+        <span style="font-size:0.8rem;color:var(--sage-dark);font-weight:600">10% of your income = <span id="tenPercent" style="font-family:var(--serif);font-weight:700">—</span></span>
+        <button class="add-row-btn" style="margin-top:0;font-size:0.7rem;padding:5px 12px" onclick="autoTithe()">Auto-fill 10%</button>
+      </div>
+
+      <div class="total-row" style="background:var(--sage-light)">
+        <span class="total-label" style="color:var(--sage-dark)">Total Giving This Month</span>
+        <span class="total-value" id="totalGiving" style="color:var(--sage-dark)">— —</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: SAVINGS GOALS -->
+  <div class="ws-section" id="sec4">
+    <div class="ws-section-header" onclick="toggleSection('sec4')">
+      <div class="ws-section-icon sage">◈</div>
+      <div><div class="ws-section-num">Section 4</div><div class="ws-section-name">Savings Goals</div></div>
+      <div class="ws-section-toggle open" id="sec4-toggle">▼</div>
+    </div>
+    <div class="ws-section-body open" id="sec4-body">
+      <div class="section-verse">"Precious treasure and oil are in a wise man's dwelling, but a foolish man devours it." — Proverbs 21:20<cite>Save with intention. Each goal is a seed planted for your future.</cite></div>
+
+      <div id="savingsGoals">
+        <div class="goal-card">
+          <div class="goal-card-header">
+            <div class="goal-num">1</div>
+            <input class="goal-title-input" type="text" placeholder="Goal name (e.g. Emergency Fund)"/>
+          </div>
+          <div class="goal-fields">
+            <div><label>Target</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calcGoalProgress(this)"/></div>
+            <div><label>Saved so far</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calcGoalProgress(this)"/></div>
+            <div><label>This month</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calc()"/></div>
+          </div>
+          <div class="goal-progress">
+            <div class="goal-progress-track"><div class="goal-progress-fill" style="width:0%"></div></div>
+            <div class="goal-progress-label">0% complete</div>
+          </div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-card-header">
+            <div class="goal-num">2</div>
+            <input class="goal-title-input" type="text" placeholder="Goal name (e.g. Holiday / travel fund)"/>
+          </div>
+          <div class="goal-fields">
+            <div><label>Target</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calcGoalProgress(this)"/></div>
+            <div><label>Saved so far</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calcGoalProgress(this)"/></div>
+            <div><label>This month</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calc()"/></div>
+          </div>
+          <div class="goal-progress">
+            <div class="goal-progress-track"><div class="goal-progress-fill" style="width:0%"></div></div>
+            <div class="goal-progress-label">0% complete</div>
+          </div>
+        </div>
+      </div>
+      <button class="add-row-btn" onclick="addGoal()">+ Add savings goal</button>
+      <hr class="ws-divider"/>
+      <div class="total-row neutral">
+        <span class="total-label">Total Saving This Month</span>
+        <span class="total-value" id="totalSavings">— —</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: EMERGENCY FUND -->
+  <div class="ws-section" id="sec5">
+    <div class="ws-section-header" onclick="toggleSection('sec5')">
+      <div class="ws-section-icon gold">🛡</div>
+      <div><div class="ws-section-num">Section 5</div><div class="ws-section-name">Emergency Fund Tracker</div></div>
+      <div class="ws-section-toggle open" id="sec5-toggle">▼</div>
+    </div>
+    <div class="ws-section-body open" id="sec5-body">
+      <div class="section-verse">"The prudent see danger and take refuge, but the simple keep going and pay the penalty." — Proverbs 22:3<cite>An emergency fund is not a lack of faith — it is wisdom in action.</cite></div>
+
+      <div class="input-row"><div class="input-label">Monthly expenses total (auto-filled from Section 2)</div><input class="ws-input wide-amount" type="number" id="efMonthlyExpenses" placeholder="0" readonly style="background:var(--ivory);cursor:default"/></div>
+      <div class="input-row"><div class="input-label">Target months of expenses to cover</div>
+        <select class="ws-input wide-amount" id="efMonths" onchange="calcEF()" style="text-align:right">
+          <option value="1">1 month</option>
+          <option value="2">2 months</option>
+          <option value="3" selected>3 months (recommended)</option>
+          <option value="6">6 months</option>
+        </select>
+      </div>
+      <div class="input-row"><div class="input-label">Emergency fund target</div><input class="ws-input wide-amount" type="number" id="efTarget" placeholder="0" readonly style="background:var(--ivory);cursor:default"/></div>
+      <div class="input-row"><div class="input-label">Amount currently saved</div><input class="ws-input wide-amount" type="number" id="efSaved" placeholder="0" oninput="calcEF()"/></div>
+      <div class="input-row"><div class="input-label">Contributing this month</div><input class="ws-input wide-amount" type="number" id="efContrib" placeholder="0" oninput="calc()"/></div>
+      <hr class="ws-divider"/>
+      <div class="balance-block">
+        <div class="balance-label">Emergency Fund Progress</div>
+        <div class="balance-track"><div class="balance-fill" id="efFill" style="width:0%;background:var(--gold)"></div></div>
+        <div class="balance-note" id="efNote">Fill in your monthly expenses and current savings to see progress.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONTHLY SUMMARY -->
+  <div class="ws-section" id="secSum">
+    <div class="ws-section-header" onclick="toggleSection('secSum')" style="background:var(--navy)">
+      <div class="ws-section-icon" style="background:rgba(212,175,55,0.15);color:var(--gold)">✦</div>
+      <div><div class="ws-section-num" style="color:rgba(255,255,255,0.45)">Summary</div><div class="ws-section-name" style="color:var(--white)">Monthly Overview</div></div>
+      <div class="ws-section-toggle open" id="secSum-toggle" style="color:rgba(255,255,255,0.5)">▼</div>
+    </div>
+    <div class="ws-section-body open" id="secSum-body">
+      <div class="summary-grid">
+        <div class="summary-card"><div class="summary-card-label">Total Income</div><div class="summary-card-value income" id="sumIncome">—</div></div>
+        <div class="summary-card"><div class="summary-card-label">Total Outgoing</div><div class="summary-card-value expense" id="sumExpense">—</div></div>
+        <div class="summary-card"><div class="summary-card-label">Remaining</div><div class="summary-card-value balance" id="sumBalance">—</div></div>
+      </div>
+      <div class="summary-grid" style="margin-bottom:0">
+        <div class="summary-card"><div class="summary-card-label">Giving</div><div class="summary-card-value" style="color:var(--sage-dark);font-family:var(--serif);font-size:1.2rem;font-weight:700" id="sumGiving">—</div></div>
+        <div class="summary-card"><div class="summary-card-label">Saving</div><div class="summary-card-value" style="color:var(--navy);font-family:var(--serif);font-size:1.2rem;font-weight:700" id="sumSavings">—</div></div>
+        <div class="summary-card"><div class="summary-card-label">Month</div><div class="summary-card-value" style="color:var(--navy);font-family:var(--serif);font-size:1rem;font-weight:700" id="sumMonth">—</div></div>
+      </div>
+      <div style="margin-top:1rem;background:var(--ivory);border-radius:10px;padding:1rem;text-align:center">
+        <p style="font-family:var(--serif);font-style:italic;font-size:0.9rem;color:var(--gray);line-height:1.7">"Live Purposefully. Plan Intentionally. Thrive Divinely."</p>
+        <p style="font-size:0.72rem;color:var(--gray);margin-top:4px">— Diva | PlanAura</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ACTIONS BAR -->
+<div class="ws-actions">
+  <button class="btn-gold" onclick="window.print()">🖨 Print / Save as PDF</button>
+  <button class="btn-outline-white" onclick="resetAll()">↺ Start Fresh</button>
+  <a href="index.html" class="btn-outline-white">← Back to PlanAura</a>
+</div>
+
+</div><!-- end panel-interactive -->
+
+<!-- NOTION TAB -->
+<div class="tab-panel" id="panel-notion">
+  <div class="notion-embed-bar">
+    <span class="notion-embed-bar-text">📋 Notion version — click <strong>Duplicate</strong> inside Notion to add this to your own workspace and reuse every month</span>
+    <a href="https://trusting-grenadilla-302.notion.site/Budget-Blessing-Worksheet-Diva-PlanAura-32f35398d62e818c8841c9c7d8c97f7b" target="_blank" style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;background:var(--navy);color:var(--white);padding:7px 16px;border-radius:6px;text-decoration:none;white-space:nowrap">Open in Notion ↗</a>
+  </div>
+  <div class="notion-embed-wrap">
+    <iframe
+      src="https://trusting-grenadilla-302.notion.site/Budget-Blessing-Worksheet-Diva-PlanAura-32f35398d62e818c8841c9c7d8c97f7b?pvs=73"
+      title="Budget Blessing Worksheet — Notion"
+      allowfullscreen
+      loading="lazy">
+    </iframe>
+  </div>
+</div>
+
+<script>
+let currency='₦';
+let currentMonth='';
+
+function switchTab(tab){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+tab).classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+function setCurrency(code,sym){
+  currency=sym;
+  document.querySelectorAll('.currency-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  calc();
+}
+
+function updateMonth(){
+  const v=document.getElementById('monthInput').value;
+  if(v){
+    const d=new Date(v+'-01');
+    currentMonth=d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+    document.getElementById('sumMonth').textContent=currentMonth;
+  }
+}
+
+function fmt(n){
+  if(isNaN(n)||n===null)return'— —';
+  return currency+n.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+}
+
+function toggleSection(id){
+  const body=document.getElementById(id+'-body');
+  const toggle=document.getElementById(id+'-toggle');
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  toggle.classList.toggle('open',!isOpen);
+}
+
+function addRow(containerId,type){
+  const container=document.getElementById(containerId);
+  const div=document.createElement('div');
+  div.className='input-row';
+  div.innerHTML=`<input class="ws-input" type="text" placeholder="Description" oninput="calc()"/><input class="ws-input amount" type="number" min="0" placeholder="0" oninput="calc()" data-${type}/>`;
+  container.appendChild(div);
+}
+
+function addGoal(){
+  const container=document.getElementById('savingsGoals');
+  const num=container.querySelectorAll('.goal-card').length+1;
+  const div=document.createElement('div');
+  div.className='goal-card';
+  div.innerHTML=`<div class="goal-card-header"><div class="goal-num">${num}</div><input class="goal-title-input" type="text" placeholder="Goal name"/></div><div class="goal-fields"><div><label>Target</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calcGoalProgress(this)"/></div><div><label>Saved so far</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calcGoalProgress(this)"/></div><div><label>This month</label><input class="ws-input" type="number" min="0" placeholder="0" oninput="calc()"/></div></div><div class="goal-progress"><div class="goal-progress-track"><div class="goal-progress-fill" style="width:0%"></div></div><div class="goal-progress-label">0% complete</div></div>`;
+  container.appendChild(div);
+}
+
+function calcGoalProgress(input){
+  const card=input.closest('.goal-card');
+  const fields=card.querySelectorAll('.goal-fields input');
+  const target=parseFloat(fields[0].value)||0;
+  const saved=parseFloat(fields[1].value)||0;
+  const pct=target>0?Math.min(100,Math.round((saved/target)*100)):0;
+  card.querySelector('.goal-progress-fill').style.width=pct+'%';
+  card.querySelector('.goal-progress-label').textContent=pct+'% complete'+(target>0?' — '+fmt(Math.max(0,target-saved))+' remaining':'');
+  calc();
+}
+
+function calc(){
+  // Income
+  let income=0;
+  document.querySelectorAll('[data-income]').forEach(i=>income+=(parseFloat(i.value)||0));
+  document.getElementById('totalIncome').textContent=fmt(income);
+  document.getElementById('tenPercent').textContent=fmt(income*0.1);
+
+  // Expenses
+  let expenses=0;
+  document.querySelectorAll('[data-expense]').forEach(i=>expenses+=(parseFloat(i.value)||0));
+  document.getElementById('totalExpenses').textContent=fmt(expenses);
+  document.getElementById('efMonthlyExpenses').value=expenses||'';
+  calcEF();
+
+  // Giving
+  calcTithe(income);
+
+  // Savings
+  let savings=0;
+  document.querySelectorAll('#savingsGoals .goal-card').forEach(card=>{
+    const inputs=card.querySelectorAll('.goal-fields input');
+    savings+=(parseFloat(inputs[2]?.value)||0);
+  });
+  savings+=(parseFloat(document.getElementById('efContrib')?.value)||0);
+  document.getElementById('totalSavings').textContent=fmt(savings);
+
+  // Balance meter
+  const totalOut=expenses+getGiving()+savings;
+  const remaining=income-totalOut;
+  const pct=income>0?Math.min(100,Math.round((totalOut/income)*100)):0;
+  const fill=document.getElementById('balanceFill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct>105?'#DC2626':pct>=95?'#059669':'#D4AF37';
+  const note=document.getElementById('balanceNote');
+  if(income===0){note.textContent='Enter your income above to see your balance.';}
+  else if(remaining>0){note.textContent=fmt(remaining)+' still unassigned — keep allocating until you reach zero.';}
+  else if(remaining===0){note.textContent='✦ Perfect zero-based budget! Every '+currency+' has a purpose.';}
+  else{note.textContent='You are '+fmt(Math.abs(remaining))+' over budget. Adjust your categories.';}
+
+  // Summary
+  document.getElementById('sumIncome').textContent=fmt(income);
+  document.getElementById('sumExpense').textContent=fmt(totalOut);
+  const balEl=document.getElementById('sumBalance');
+  balEl.textContent=fmt(remaining);
+  balEl.className='summary-card-value balance '+(remaining>=0?'positive':'negative');
+  document.getElementById('sumGiving').textContent=fmt(getGiving());
+  document.getElementById('sumSavings').textContent=fmt(savings);
+  if(currentMonth)document.getElementById('sumMonth').textContent=currentMonth;
+}
+
+function getGiving(){
+  return (parseFloat(document.getElementById('titheAmt').value)||0)+
+    (parseFloat(document.getElementById('secondCollAmt').value)||0)+
+    Array.from(document.querySelectorAll('[data-giving]')).reduce((s,i)=>s+(parseFloat(i.value)||0),0);
+}
+
+function calcTithe(income){
+  if(income===undefined){
+    income=0;
+    document.querySelectorAll('[data-income]').forEach(i=>income+=(parseFloat(i.value)||0));
+  }
+  document.getElementById('tenPercent').textContent=fmt(income*0.1);
+  document.getElementById('totalGiving').textContent=fmt(getGiving());
+}
+
+function autoTithe(){
+  let income=0;
+  document.querySelectorAll('[data-income]').forEach(i=>income+=(parseFloat(i.value)||0));
+  if(!income){alert('Enter your income in Section 1 first.');return;}
+  document.getElementById('titheAmt').value=Math.round(income*0.1);
+  calc();
+}
+
+function calcEF(){
+  const monthly=parseFloat(document.getElementById('efMonthlyExpenses').value)||0;
+  const months=parseInt(document.getElementById('efMonths').value)||3;
+  const target=monthly*months;
+  const saved=parseFloat(document.getElementById('efSaved').value)||0;
+  document.getElementById('efTarget').value=target||'';
+  const pct=target>0?Math.min(100,Math.round((saved/target)*100)):0;
+  document.getElementById('efFill').style.width=pct+'%';
+  const note=document.getElementById('efNote');
+  if(target===0){note.textContent='Fill in your expenses and savings to track progress.';}
+  else if(saved>=target){note.textContent='✦ Emergency fund complete! You are fully protected for '+months+' month'+(months>1?'s':'')+'.';}
+  else{note.textContent=pct+'% complete — '+fmt(Math.max(0,target-saved))+' more to reach your '+months+'-month target of '+fmt(target)+'.';}
+}
+
+function resetAll(){
+  if(!confirm('Start fresh? All data entered will be cleared.'))return;
+  document.querySelectorAll('input[type=number],input[type=text]').forEach(i=>i.value='');
+  document.querySelectorAll('.goal-progress-fill').forEach(el=>el.style.width='0%');
+  document.querySelectorAll('.goal-progress-label').forEach(el=>el.textContent='0% complete');
+  document.getElementById('balanceFill').style.width='0%';
+  document.getElementById('efFill').style.width='0%';
+  calc();
+}
+
+// Init
+document.getElementById('monthInput').value=new Date().toISOString().slice(0,7);
+updateMonth();
+calc();
+</script>
+</body>
+</html>
