@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Accessing Your Resource — Diva | PlanAura</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0B1F3A;--gold:#D4AF37;--gold-light:#F5EDD8;--ivory:#F8F5F0;--ivory-mid:#EDE8DF;--sage:#A8BFA3;--sage-light:#E8F0E5;--sage-dark:#5C7A57;--white:#FFFFFF;--gray:#6B7280;--red:#DC2626;--serif:'Playfair Display',Georgia,serif;--sans:'Nunito',sans-serif;}
+body{font-family:var(--sans);background:var(--navy);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.gate-box{background:var(--white);border-radius:20px;padding:2.5rem;max-width:480px;width:100%;text-align:center;position:relative;overflow:hidden}
+.gate-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--navy),var(--gold),var(--sage))}
+.gate-ornament{font-size:2rem;color:var(--gold);margin-bottom:0.75rem;display:block}
+.gate-brand{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:1.5rem}
+.gate-brand span{color:var(--gold)}
+.gate-spinner{width:40px;height:40px;border:3px solid var(--ivory-mid);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gate-status{font-size:0.92rem;color:var(--gray);line-height:1.7;margin-bottom:0.5rem}
+.gate-title{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:0.6rem}
+.gate-desc{font-size:0.88rem;line-height:1.75;color:var(--gray);margin-bottom:1.5rem}
+.gate-success{display:none}
+.gate-error{display:none;background:#FEE2E2;border:1px solid #FECACA;border-radius:10px;padding:1rem;color:var(--red);font-size:0.86rem;line-height:1.65;margin-top:0.5rem}
+.btn-gold{display:inline-block;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:14px 32px;border-radius:8px;border:none;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.btn-gold:hover{background:#E8D080}
+.btn-outline{display:inline-block;background:transparent;color:var(--navy);font-family:var(--sans);font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:12px 26px;border-radius:8px;border:2px solid var(--ivory-mid);cursor:pointer;text-decoration:none;margin-top:0.5rem}
+.product-name-badge{background:var(--gold-light);border:1px solid rgba(212,175,55,0.3);border-radius:8px;padding:0.6rem 1rem;font-size:0.86rem;font-weight:700;color:#9A7C1A;margin-bottom:1.25rem;display:inline-block}
+/* Email form for token lookup */
+.token-form{display:flex;flex-direction:column;gap:10px;margin-top:0.5rem;text-align:left}
+.token-input{padding:12px 15px;border:1.5px solid var(--ivory-mid);border-radius:8px;font-family:var(--sans);font-size:0.9rem;color:#1A1A1A;outline:none;transition:border-color 0.2s;width:100%}
+.token-input:focus{border-color:var(--gold)}
+.token-input::placeholder{color:var(--gray)}
+.token-form-title{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem;text-align:center}
+.token-form-sub{font-size:0.83rem;color:var(--gray);line-height:1.65;margin-bottom:0.75rem;text-align:center}
+</style>
+</head>
+<body>
+<div class="gate-box" id="gateBox">
+  <span class="gate-ornament">✦</span>
+  <div class="gate-brand">Diva | <span>PlanAura</span></div>
+  <!-- CHECKING STATE -->
+  <div id="stateChecking">
+    <div class="gate-spinner"></div>
+    <p class="gate-status">Verifying your access…</p>
+  </div>
+  <!-- SUCCESS STATE -->
+  <div id="stateSuccess" class="gate-success">
+    <div style="font-size:2rem;margin-bottom:0.75rem">✅</div>
+    <h2 class="gate-title">Access Confirmed!</h2>
+    <div class="product-name-badge" id="successProduct"></div>
+    <p class="gate-desc">Your purchase has been verified. Click below to open your resource.</p>
+    <a id="accessLink" href="#" class="btn-gold" target="_blank">Open My Resource →</a>
+    <br/>
+    <a href="index.html" class="btn-outline" style="margin-top:0.75rem;display:inline-block">← Back to PlanAura</a>
+  </div>
+  <!-- NO TOKEN STATE — show email lookup -->
+  <div id="stateEmailLookup" style="display:none">
+    <div class="token-form-title">Find Your Access Link</div>
+    <p class="token-form-sub">Enter the email address you used when purchasing to retrieve your access link.</p>
+    <form class="token-form" onsubmit="lookupByEmail(event)">
+      <input class="token-input" type="email" id="lookupEmail" placeholder="your@email.com" required/>
+      <button class="btn-gold" type="submit" style="width:100%;padding:13px">Find My Access →</button>
+    </form>
+    <div class="gate-error" id="lookupError"></div>
+  </div>
+  <!-- ERROR STATE -->
+  <div id="stateError" style="display:none">
+    <div style="font-size:2rem;margin-bottom:0.75rem">🔒</div>
+    <h2 class="gate-title">Access Not Found</h2>
+    <p class="gate-desc">This link may have expired or is invalid. If you've purchased this product, please check your email for the original access link or contact us.</p>
+    <a href="index.html" class="btn-gold">← Back to PlanAura</a>
+    <br/>
+    <a href="shop.html" class="btn-outline" style="margin-top:0.75rem;display:inline-block">Browse Products</a>
+  </div>
+</div>
+
+<script>
+const SUPA_URL='https://cqeoarwhhfaztojdidyz.supabase.co';
+const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxZW9hcndoaGZhenRvamRpZHl6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MjIyOTgsImV4cCI6MjA5MDA5ODI5OH0.DzfhoL8Gtm3Wc4hWqqR78bEKEsMEiUnwNbgNAQvNtHU';
+const db=supabase.createClient(SUPA_URL,SUPA_KEY);
+
+function showState(state){
+  ['stateChecking','stateSuccess','stateEmailLookup','stateError'].forEach(s=>{
+    document.getElementById(s).style.display=s===state?'block':'none';
+  });
+}
+
+async function verifyToken(token){
+  try{
+    const {data,error}=await db.from('access_tokens')
+      .select('*, products(name, external_link, drive_url, is_paid_app)')
+      .eq('token',token)
+      .single();
+    if(error||!data)return false;
+    // Check expiry
+    if(data.expires_at&&new Date(data.expires_at)<new Date())return false;
+    // Update use count
+    await db.from('access_tokens').update({used_count:data.used_count+1}).eq('id',data.id);
+    // Show success
+    const productName=data.product_name||data.products?.name||'Your Resource';
+    const productLink=data.products?.drive_url||data.products?.external_link||'#';
+    document.getElementById('successProduct').textContent=productName;
+    document.getElementById('accessLink').href=productLink;
+    document.getElementById('accessLink').textContent=`Open ${productName} →`;
+    showState('stateSuccess');
+    return true;
+  }catch(e){
+    console.error('Token verification error:',e);
+    return false;
+  }
+}
+
+async function lookupByEmail(e){
+  e.preventDefault();
+  const email=document.getElementById('lookupEmail').value.trim();
+  const errEl=document.getElementById('lookupError');
+  errEl.style.display='none';
+  try{
+    const {data,error}=await db.from('access_tokens')
+      .select('token, product_name, expires_at')
+      .eq('email',email)
+      .order('created_at',{ascending:false})
+      .limit(1)
+      .single();
+    if(error||!data){
+      errEl.textContent='No purchase found for this email address. If you believe this is an error, please contact us.';
+      errEl.style.display='block';
+      return;
+    }
+    // Redirect to the token URL
+    window.location.href='access.html?token='+data.token;
+  }catch(err){
+    errEl.textContent='Something went wrong. Please try again.';
+    errEl.style.display='block';
+  }
+}
+
+// On load — check for token in URL
+(async()=>{
+  const params=new URLSearchParams(window.location.search);
+  const token=params.get('token');
+  if(!token){
+    showState('stateEmailLookup');
+    return;
+  }
+  const valid=await verifyToken(token);
+  if(!valid)showState('stateError');
+})();
+</script>
+</body>
+</html>
