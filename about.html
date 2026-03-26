@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — Diva | PlanAura</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0B1F3A;--navy-mid:#1a3558;--gold:#D4AF37;--gold-light:#F5EDD8;--gold-mid:#E8D080;--gold-dark:#9A7C1A;--ivory:#F8F5F0;--ivory-mid:#EDE8DF;--charcoal:#1A1A1A;--sage:#A8BFA3;--sage-light:#E8F0E5;--sage-dark:#5C7A57;--white:#FFFFFF;--gray:#6B7280;--serif:'Playfair Display',Georgia,serif;--sans:'Nunito',sans-serif;}
+html{scroll-behavior:smooth}body{font-family:var(--sans);background:var(--ivory);color:var(--charcoal);overflow-x:hidden}a{text-decoration:none;color:inherit}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,31,58,0.97);backdrop-filter:blur(16px);height:68px;display:flex;align-items:center;padding:0 5vw;justify-content:space-between;border-bottom:1px solid rgba(212,175,55,0.2)}
+.nav-logo{display:flex;align-items:center;gap:10px}.nav-logo-icon{width:30px;height:30px;flex-shrink:0}
+.nav-logo-text{font-family:var(--serif);font-size:1.05rem;color:var(--white);font-weight:600}.nav-logo-text span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:1.5rem}.nav-links a{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.72);transition:color 0.2s;font-weight:500}.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:9px 20px!important;border-radius:6px;font-weight:700!important}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--white);border-radius:2px}
+.mobile-nav{display:none;position:fixed;top:68px;left:0;right:0;background:var(--navy);border-bottom:1px solid rgba(212,175,55,0.15);padding:1.5rem 5vw 2rem;flex-direction:column;gap:1.1rem;z-index:199}.mobile-nav a{font-size:0.88rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.8);font-weight:500}.mobile-nav.open{display:flex}.mobile-nav a.active{color:var(--gold)}
+.btn-gold{display:inline-block;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:14px 32px;border-radius:8px;border:none;cursor:pointer;transition:all 0.2s}.btn-gold:hover{background:var(--gold-mid)}
+.btn-navy{display:inline-block;background:var(--navy);color:var(--white);font-family:var(--sans);font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:12px 24px;border-radius:8px;border:none;cursor:pointer;transition:all 0.2s}.btn-navy:hover{background:var(--navy-mid)}
+.page{padding-top:68px}
+.page-hero{background:var(--navy);padding:4rem 5vw 3.5rem;text-align:center;position:relative;overflow:hidden}
+.page-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(212,175,55,0.07),transparent 60%);pointer-events:none}
+.page-hero-eyebrow{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.65rem}
+.page-hero-title{font-family:var(--serif);font-size:clamp(2rem,5vw,3rem);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:0.65rem}
+.page-hero-title em{font-style:italic;color:var(--gold)}
+.page-hero-desc{font-size:0.92rem;line-height:1.8;color:rgba(255,255,255,0.55);max-width:480px;margin:0 auto}
+
+/* ABOUT CONTENT */
+.about-wrap{max-width:860px;margin:0 auto;width:100%;padding:4.5rem 5vw}
+.about-section{margin-bottom:3.5rem}
+.about-eyebrow{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.6rem}
+.about-heading{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:1.1rem}
+.about-heading em{font-style:italic;color:var(--gold)}
+.about-body{font-size:0.96rem;line-height:1.9;color:var(--gray)}
+.about-body p{margin-bottom:1rem}
+.about-body p:last-child{margin-bottom:0}
+
+/* VALUES */
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:1.75rem}
+.value-card{background:var(--white);border:1px solid var(--ivory-mid);border-radius:14px;padding:1.4rem}
+.value-icon{font-size:1.5rem;margin-bottom:0.65rem;display:block}
+.value-name{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem}
+.value-desc{font-size:0.83rem;line-height:1.7;color:var(--gray)}
+
+/* PILLARS */
+.pillars-list{display:flex;flex-direction:column;gap:1rem;margin-top:1.5rem}
+.pillar-row{display:flex;gap:1rem;align-items:flex-start;padding:1.25rem;border-radius:12px}
+.pillar-row.faith{background:var(--sage-light);border:1px solid rgba(168,191,163,0.3)}
+.pillar-row.finance{background:var(--gold-light);border:1px solid rgba(212,175,55,0.25)}
+.pillar-row.prod{background:#EEF2F8;border:1px solid rgba(11,31,58,0.1)}
+.pillar-row-icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+.pillar-row-name{font-family:var(--serif);font-size:1.05rem;font-weight:700;margin-bottom:0.3rem}
+.pillar-row.faith .pillar-row-name{color:var(--sage-dark)}
+.pillar-row.finance .pillar-row-name{color:var(--gold-dark)}
+.pillar-row.prod .pillar-row-name{color:var(--navy)}
+.pillar-row-desc{font-size:0.84rem;line-height:1.65;color:var(--gray)}
+
+/* CTA SECTION */
+.about-cta{background:var(--navy);border-radius:16px;padding:2.5rem;text-align:center;margin-top:3rem}
+.about-cta-title{font-family:var(--serif);font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:0.6rem}
+.about-cta-title em{font-style:italic;color:var(--gold)}
+.about-cta-desc{font-size:0.88rem;line-height:1.75;color:rgba(255,255,255,0.55);margin-bottom:1.6rem;max-width:400px;margin-left:auto;margin-right:auto}
+.about-cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+footer{background:var(--charcoal);color:rgba(255,255,255,0.5);padding:2.5rem 5vw 1.5rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:1.75rem}
+.footer-brand-name{font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:0.3rem}.footer-brand-name span{color:var(--gold)}
+.footer-tagline{font-size:0.66rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:0.75rem}
+.footer-desc{font-size:0.8rem;line-height:1.75;color:rgba(255,255,255,0.36)}
+.footer-col-title{font-size:0.64rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.38);margin-bottom:0.75rem;font-weight:600}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.5rem}.footer-col ul li a{font-size:0.8rem;color:rgba(255,255,255,0.36);transition:color 0.2s}.footer-col ul li a:hover{color:var(--gold)}
+.footer-bottom{max-width:1100px;margin:0 auto;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.75rem}
+.footer-bottom-text{font-size:0.7rem;color:rgba(255,255,255,0.24)}.footer-bottom-text span{color:var(--gold)}
+
+@media(max-width:960px){nav{padding:0 4vw}.nav-links{display:none}.nav-hamburger{display:flex}.values-grid{grid-template-columns:1fr 1fr}.footer-inner{grid-template-columns:1fr 1fr;gap:1.75rem}}
+@media(max-width:640px){.values-grid{grid-template-columns:1fr}.about-wrap{padding:3rem 5vw}.about-cta-btns{flex-direction:column;align-items:stretch}.about-cta-btns a,.about-cta-btns button{text-align:center}.footer-inner{grid-template-columns:1fr;gap:1.25rem}.footer-bottom{flex-direction:column}}
+@media(max-width:380px){nav{height:60px}.mobile-nav{top:60px}.page{padding-top:60px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-logo-icon" viewBox="0 0 30 30" fill="none"><rect x="2" y="4" width="26" height="23" rx="3" stroke="#D4AF37" stroke-width="2"/><path d="M2 11h26" stroke="#D4AF37" stroke-width="2"/><path d="M10 2v4M20 2v4" stroke="#D4AF37" stroke-width="2" stroke-linecap="round"/><rect x="6" y="15" width="5" height="4" rx="1" fill="#D4AF37"/><rect x="13" y="15" width="5" height="4" rx="1" fill="#D4AF37" opacity="0.55"/><rect x="20" y="15" width="4" height="4" rx="1" fill="#D4AF37" opacity="0.3"/><rect x="6" y="21" width="5" height="3" rx="1" fill="#D4AF37" opacity="0.35"/><rect x="13" y="21" width="5" height="3" rx="1" fill="#D4AF37" opacity="0.55"/></svg>
+    <span class="nav-logo-text">Diva | <span>PlanAura</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a><a href="quiz.html">Quiz</a><a href="freebies.html">Freebies</a><a href="shop.html">Shop</a><a href="blog.html">Blog</a><a href="about.html" class="active">About</a>
+    <a href="quiz.html" class="nav-cta">Take the Quiz</a>
+  </div>
+  <button class="nav-hamburger" onclick="document.getElementById('mobileNav').classList.toggle('open')" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a><a href="quiz.html">Quiz</a><a href="freebies.html">Freebies</a><a href="shop.html">Shop</a><a href="blog.html">Blog</a><a href="about.html" class="active">About</a>
+</div>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-hero-eyebrow">About PlanAura</div>
+    <h1 class="page-hero-title">Built for Women Who <em>Refuse to Drift</em></h1>
+    <p class="page-hero-desc">Diva | PlanAura exists for the Catholic woman who knows there is more — and is ready to live it with intention.</p>
+  </div>
+
+  <div class="about-wrap">
+
+    <div class="about-section">
+      <div class="about-eyebrow">Our Story</div>
+      <h2 class="about-heading">Why <em>PlanAura</em> Exists</h2>
+      <div class="about-body">
+        <p>Diva | PlanAura was born from a simple but urgent observation: too many faith-driven women are living reactive lives. They are overcommitted, under-resourced, financially stressed, and spiritually scattered — not because they lack desire, but because they lack structure.</p>
+        <p>We believe that faith, finances, and productivity are not separate domains. They are three expressions of the same thing: how you steward your life. When one is disordered, all three suffer. When all three are aligned, you step into a version of yourself that is calm, intentional, and deeply effective.</p>
+        <p>PlanAura exists to give you the tools, frameworks, and community to build that kind of life — rooted in your Catholic faith, grounded in practical wisdom, and designed for real, ordinary days.</p>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-eyebrow">What We Believe</div>
+      <h2 class="about-heading">Our <em>Core Values</em></h2>
+      <div class="values-grid">
+        <div class="value-card"><span class="value-icon">✝</span><div class="value-name">Faith First</div><p class="value-desc">Everything we create starts with God. Our resources are designed to draw you closer to Him, not further into busyness.</p></div>
+        <div class="value-card"><span class="value-icon">◈</span><div class="value-name">Honest Stewardship</div><p class="value-desc">Money is a moral issue. We help you manage it with clarity, generosity, and long-term wisdom.</p></div>
+        <div class="value-card"><span class="value-icon">◆</span><div class="value-name">Intentional Order</div><p class="value-desc">Structure is not the enemy of freedom — it creates it. We help you build routines and systems that give you more of what matters.</p></div>
+        <div class="value-card"><span class="value-icon">✦</span><div class="value-name">Practical Wisdom</div><p class="value-desc">No theory without application. Every resource we create is something you can act on today.</p></div>
+        <div class="value-card"><span class="value-icon">○</span><div class="value-name">Generous Access</div><p class="value-desc">We lead with freebies because we believe the right resource at the right moment changes lives.</p></div>
+        <div class="value-card"><span class="value-icon">△</span><div class="value-name">Continuous Growth</div><p class="value-desc">We meet you where you are and walk with you toward where you're called to be — one step at a time.</p></div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-eyebrow">Our Three Pillars</div>
+      <h2 class="about-heading">The <em>PlanAura</em> Framework</h2>
+      <div class="about-body"><p>Every resource we create lives under one of these three pillars — and together, they form a complete framework for an intentional life.</p></div>
+      <div class="pillars-list">
+        <div class="pillar-row faith"><span class="pillar-row-icon">✝</span><div><div class="pillar-row-name">Faith · Catholic</div><p class="pillar-row-desc">Tools, calendars, and guides for deepening your prayer life, living the liturgical year, and building habits rooted in Catholic tradition. Your faith is the foundation — not a category.</p></div></div>
+        <div class="pillar-row finance"><span class="pillar-row-icon">◈</span><div><div class="pillar-row-name">Personal Finance</div><p class="pillar-row-desc">Worksheets, frameworks, and guides for budgeting with intention, building savings, and approaching money as a form of spiritual stewardship — not just a practical task.</p></div></div>
+        <div class="pillar-row prod"><span class="pillar-row-icon">◆</span><div><div class="pillar-row-name">Productivity</div><p class="pillar-row-desc">Planning tools, routine guides, and frameworks to help you structure your week, protect your focus, and build systems that create space for the people and things that matter most.</p></div></div>
+      </div>
+    </div>
+
+    <div class="about-cta">
+      <h2 class="about-cta-title">Ready to <em>Begin?</em></h2>
+      <p class="about-cta-desc">Take the free quiz to discover where to focus first — or browse the free resources and start today.</p>
+      <div class="about-cta-btns">
+        <a href="quiz.html" class="btn-gold">Take the Free Quiz</a>
+        <a href="freebies.html" class="btn-navy">Browse Free Resources</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div><div class="footer-brand-name">Diva | <span>PlanAura</span></div><div class="footer-tagline">Faith · Finance · Productivity</div><p class="footer-desc">Resources for the intentional Catholic woman — rooted in faith, grounded in order.</p></div>
+    <div class="footer-col"><div class="footer-col-title">Explore</div><ul><li><a href="quiz.html">Take the Quiz</a></li><li><a href="freebies.html">Free Resources</a></li><li><a href="shop.html">Shop</a></li><li><a href="blog.html">Blog</a></li></ul></div>
+    <div class="footer-col"><div class="footer-col-title">Resources</div><ul><li><a href="https://calendar-ten-tan.vercel.app/" target="_blank">Catholic Calendar</a></li><li><a href="https://payhip.com/b/BwCpQ" target="_blank">Holy Morning Routine</a></li><li><a href="https://payhip.com/b/YM3k5" target="_blank">Wedding Checklist</a></li></ul></div>
+    <div class="footer-col"><div class="footer-col-title">Company</div><ul><li><a href="about.html">About</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span class="footer-bottom-text">© 2025 Diva | PlanAura. All rights reserved.</span><span class="footer-bottom-text">Made with <span>✦</span> for the intentional woman.</span></div>
+</footer>
+</body>
+</html>
