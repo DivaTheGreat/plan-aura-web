@@ -1,0 +1,23 @@
+{
+  "name": "plan-aura-web",
+  "version": "1.0.0",
+  "description": "PlanAura - Faith, Finance & Productivity",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DivaTheGreat/plan-aura-web.git"
+  },
+  "keywords": ["analytics", "vercel"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DivaTheGreat/plan-aura-web/issues"
+  },
+  "homepage": "https://github.com/DivaTheGreat/plan-aura-web#readme",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
